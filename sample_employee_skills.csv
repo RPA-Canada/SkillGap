@@ -1,108 +1,108 @@
-employee_name,skill
-John Smith,Python
-John Smith,AWS
-John Smith,Docker
-John Smith,Machine Learning
-Sarah Johnson,JavaScript
-Sarah Johnson,React
-Sarah Johnson,TypeScript
-Sarah Johnson,Node.js
-Michael Brown,Java
-Michael Brown,Spring Boot
-Michael Brown,SQL
-Michael Brown,PostgreSQL
-Emily Davis,Python
-Emily Davis,Data Analysis
-Emily Davis,Pandas
-Emily Davis,TensorFlow
-David Wilson,AWS
-David Wilson,Kubernetes
-David Wilson,Terraform
-David Wilson,CI/CD
-Jennifer Martinez,Product Design
-Jennifer Martinez,Figma
-Jennifer Martinez,UI/UX
-Jennifer Martinez,User Research
-Robert Taylor,Project Management
-Robert Taylor,Agile
-Robert Taylor,Scrum
-Robert Taylor,JIRA
-Lisa Anderson,JavaScript
-Lisa Anderson,Angular
-Lisa Anderson,TypeScript
-Lisa Anderson,CSS
-James Thomas,Python
-James Thomas,Django
-James Thomas,PostgreSQL
-James Thomas,Redis
-Amanda Jackson,React
-Amanda Jackson,Next.js
-Amanda Jackson,GraphQL
-Amanda Jackson,Node.js
-Christopher White,Java
-Christopher White,Spring Boot
-Christopher White,Microservices
-Christopher White,Kafka
-Jessica Harris,Data Engineering
-Jessica Harris,Apache Spark
-Jessica Harris,Airflow
-Jessica Harris,Python
-Daniel Martin,DevOps
-Daniel Martin,Jenkins
-Daniel Martin,Docker
-Daniel Martin,Kubernetes
-Michelle Thompson,Cybersecurity
-Michelle Thompson,Network Security
-Michelle Thompson,Penetration Testing
-Ashley Garcia,Mobile Development
-Ashley Garcia,React Native
-Ashley Garcia,iOS Development
-Matthew Robinson,AWS
-Matthew Robinson,Lambda
-Matthew Robinson,DynamoDB
-Matthew Robinson,API Gateway
-Stephanie Clark,Machine Learning
-Stephanie Clark,PyTorch
-Stephanie Clark,Natural Language Processing
-Brian Lewis,SQL
-Brian Lewis,MongoDB
-Brian Lewis,Data Modeling
-Nicole Walker,Project Management
-Nicole Walker,Stakeholder Management
-Nicole Walker,Budget Management
-Kevin Hall,Go
-Kevin Hall,Kubernetes
-Kevin Hall,gRPC
-Laura Allen,Vue.js
-Laura Allen,JavaScript
-Laura Allen,Tailwind CSS
-Ryan Young,Salesforce
-Ryan Young,Apex
-Andrew King,Power BI
-Andrew King,Tableau
-Andrew King,Data Analysis
-Elizabeth Wright,Technical Writing
-Elizabeth Wright,Documentation
-Timothy Scott,Rust
-Timothy Scott,Systems Programming
-Kimberly Green,Agile
-Kimberly Green,Scrum Master
-Kimberly Green,Coaching
-Joshua Adams,Azure
-Joshua Adams,Azure DevOps
-Joshua Adams,C#
-Samantha Nelson,.NET
-Samantha Nelson,C#
-Samantha Nelson,SQL Server
-Brandon Hill,PHP
-Brandon Hill,Laravel
-Brandon Hill,MySQL
-Megan Moore,Flutter
-Megan Moore,Dart
-Megan Moore,Mobile Development
-Justin Taylor,Elasticsearch
-Justin Taylor,Logstash
-Justin Taylor,Kibana
-Katherine Jackson,Product Management
-Katherine Jackson,Roadmapping
-Katherine Jackson,User Stories
+employee_name,skill,years_of_experience
+John Smith,Python,8
+John Smith,AWS,6
+John Smith,Docker,5
+John Smith,Machine Learning,4
+Sarah Johnson,JavaScript,7
+Sarah Johnson,React,5
+Sarah Johnson,TypeScript,4
+Sarah Johnson,Node.js,6
+Michael Brown,Java,10
+Michael Brown,Spring Boot,7
+Michael Brown,SQL,9
+Michael Brown,PostgreSQL,6
+Emily Davis,Python,5
+Emily Davis,Data Analysis,6
+Emily Davis,Pandas,4
+Emily Davis,TensorFlow,3
+David Wilson,AWS,8
+David Wilson,Kubernetes,5
+David Wilson,Terraform,4
+David Wilson,CI/CD,6
+Jennifer Martinez,Product Design,9
+Jennifer Martinez,Figma,5
+Jennifer Martinez,UI/UX,8
+Jennifer Martinez,User Research,6
+Robert Taylor,Project Management,12
+Robert Taylor,Agile,10
+Robert Taylor,Scrum,9
+Robert Taylor,JIRA,7
+Lisa Anderson,JavaScript,4
+Lisa Anderson,Angular,3
+Lisa Anderson,TypeScript,3
+Lisa Anderson,CSS,5
+James Thomas,Python,6
+James Thomas,Django,5
+James Thomas,PostgreSQL,4
+James Thomas,Redis,3
+Amanda Jackson,React,4
+Amanda Jackson,Next.js,2
+Amanda Jackson,GraphQL,3
+Amanda Jackson,Node.js,4
+Christopher White,Java,8
+Christopher White,Spring Boot,6
+Christopher White,Microservices,5
+Christopher White,Kafka,4
+Jessica Harris,Data Engineering,7
+Jessica Harris,Apache Spark,5
+Jessica Harris,Airflow,4
+Jessica Harris,Python,6
+Daniel Martin,DevOps,9
+Daniel Martin,Jenkins,7
+Daniel Martin,Docker,8
+Daniel Martin,Kubernetes,6
+Michelle Thompson,Cybersecurity,11
+Michelle Thompson,Network Security,9
+Michelle Thompson,Penetration Testing,7
+Ashley Garcia,Mobile Development,5
+Ashley Garcia,React Native,4
+Ashley Garcia,iOS Development,3
+Matthew Robinson,AWS,5
+Matthew Robinson,Lambda,4
+Matthew Robinson,DynamoDB,3
+Matthew Robinson,API Gateway,4
+Stephanie Clark,Machine Learning,6
+Stephanie Clark,PyTorch,4
+Stephanie Clark,Natural Language Processing,5
+Brian Lewis,SQL,8
+Brian Lewis,MongoDB,5
+Brian Lewis,Data Modeling,6
+Nicole Walker,Project Management,8
+Nicole Walker,Stakeholder Management,7
+Nicole Walker,Budget Management,6
+Kevin Hall,Go,4
+Kevin Hall,Kubernetes,3
+Kevin Hall,gRPC,2
+Laura Allen,Vue.js,3
+Laura Allen,JavaScript,5
+Laura Allen,Tailwind CSS,2
+Ryan Young,Salesforce,6
+Ryan Young,Apex,5
+Andrew King,Power BI,4
+Andrew King,Tableau,5
+Andrew King,Data Analysis,6
+Elizabeth Wright,Technical Writing,7
+Elizabeth Wright,Documentation,8
+Timothy Scott,Rust,3
+Timothy Scott,Systems Programming,5
+Kimberly Green,Agile,6
+Kimberly Green,Scrum Master,5
+Kimberly Green,Coaching,4
+Joshua Adams,Azure,5
+Joshua Adams,Azure DevOps,4
+Joshua Adams,C#,6
+Samantha Nelson,.NET,7
+Samantha Nelson,C#,8
+Samantha Nelson,SQL Server,6
+Brandon Hill,PHP,5
+Brandon Hill,Laravel,4
+Brandon Hill,MySQL,5
+Megan Moore,Flutter,3
+Megan Moore,Dart,3
+Megan Moore,Mobile Development,4
+Justin Taylor,Elasticsearch,4
+Justin Taylor,Logstash,3
+Justin Taylor,Kibana,3
+Katherine Jackson,Product Management,8
+Katherine Jackson,Roadmapping,6
+Katherine Jackson,User Stories,7

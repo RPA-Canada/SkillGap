@@ -357,7 +357,7 @@ analyzeBtn.addEventListener('click', async () => {
 
         // 3. Parse employee skills CSV
         const csvText = await employeeFile.text();
-        const { employeeSkills, skillCounts, totalEmployees } = parseEmployeeCsv(csvText);
+        const { employeeSkills, skillCounts, skillResources, totalEmployees } = parseEmployeeCsv(csvText);
         const companySkills = new Set(Object.keys(skillCounts));
 
         // 4. Perform the gap analysis
@@ -377,7 +377,8 @@ analyzeBtn.addEventListener('click', async () => {
             totalEmployees,
             totalSkillsInCompany: Object.keys(skillCounts).length,
             employeeSkills,
-            skillCounts
+            skillCounts,
+            skillResources
         });
 
     } catch (error) {
@@ -447,6 +448,7 @@ function extractSkillsFromText(text) {
 function parseEmployeeCsv(csvText) {
     const employeeSkills = {};
     const skillCounts = {};
+    const skillResources = {}; // NEW: Track employees and experience for each skill
     const lines = csvText.split(/\r?\n/);
     
     // Skip header row and empty lines
@@ -466,6 +468,7 @@ function parseEmployeeCsv(csvText) {
         if (columns && columns.length >= 2) {
             const employee = columns[0].trim();
             let skill = columns[1].trim();
+            const yearsExp = columns[2] ? parseInt(columns[2].trim()) || 0 : 0;
             
             // Normalize skill to canonical name if alias exists
             const normalizedSkill = SKILL_ALIASES[skill.toLowerCase()];
@@ -478,9 +481,19 @@ function parseEmployeeCsv(csvText) {
                     employeeSkills[employee] = [];
                 }
                 // Avoid duplicates for same employee
-                if (!employeeSkills[employee].includes(skill)) {
-                    employeeSkills[employee].push(skill);
+                if (!employeeSkills[employee].find(s => s.skill === skill)) {
+                    employeeSkills[employee].push({ skill, yearsExp });
                 }
+                
+                // Track resources per skill
+                if (!skillResources[skill]) {
+                    skillResources[skill] = [];
+                }
+                // Avoid duplicate entries
+                if (!skillResources[skill].find(r => r.name === employee)) {
+                    skillResources[skill].push({ name: employee, yearsExp });
+                }
+                
                 skillCounts[skill] = (skillCounts[skill] || 0) + 1;
             }
         }
@@ -488,7 +501,8 @@ function parseEmployeeCsv(csvText) {
 
     return { 
         employeeSkills, 
-        skillCounts, 
+        skillCounts,
+        skillResources,
         totalEmployees: Object.keys(employeeSkills).length 
     };
 }
@@ -520,6 +534,90 @@ function performGapAnalysis(requiredSkills, companySkills, skillCounts) {
     return { hardGaps, atRisk, wellStaffed, total: requiredSkills.length };
 }
 
+// Helper function to generate expandable skill row with resources
+function generateSkillRow(item, skillResources, cssClass, badgeClass, badgeText) {
+    const resources = skillResources[item.skill] || [];
+    const avgExp = resources.length > 0 
+        ? (resources.reduce((sum, r) => sum + r.yearsExp, 0) / resources.length).toFixed(1)
+        : 0;
+    
+    // Sort resources by experience (highest first)
+    const sortedResources = [...resources].sort((a, b) => b.yearsExp - a.yearsExp);
+    
+    const hasResources = resources.length > 0;
+    const skillId = item.skill.replace(/[^a-zA-Z0-9]/g, '_');
+    
+    return `
+        <li class="${cssClass} expandable-skill" data-skill-id="${skillId}">
+            <div class="skill-header" onclick="toggleSkillDetails('${skillId}')">
+                <span class="skill-name">
+                    ${hasResources ? '<span class="expand-icon">▶</span>' : ''}
+                    ${item.skill}
+                </span>
+                <div class="skill-badges">
+                    ${hasResources ? `<span class="badge badge-exp">${avgExp} avg yrs</span>` : ''}
+                    <span class="badge ${badgeClass}">${badgeText}</span>
+                </div>
+            </div>
+            ${hasResources ? `
+                <div class="skill-details hidden" id="details-${skillId}">
+                    <table class="resources-table">
+                        <thead>
+                            <tr>
+                                <th>Resource Name</th>
+                                <th>Experience</th>
+                                <th>Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${sortedResources.map(r => `
+                                <tr>
+                                    <td>${r.name}</td>
+                                    <td>${r.yearsExp} years</td>
+                                    <td><span class="exp-level ${getExpLevelClass(r.yearsExp)}">${getExpLevel(r.yearsExp)}</span></td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            ` : ''}
+        </li>
+    `;
+}
+
+// Helper to determine experience level
+function getExpLevel(years) {
+    if (years >= 10) return 'Expert';
+    if (years >= 7) return 'Senior';
+    if (years >= 4) return 'Mid-Level';
+    if (years >= 2) return 'Junior';
+    return 'Entry';
+}
+
+function getExpLevelClass(years) {
+    if (years >= 10) return 'expert';
+    if (years >= 7) return 'senior';
+    if (years >= 4) return 'mid';
+    if (years >= 2) return 'junior';
+    return 'entry';
+}
+
+// Toggle skill details visibility
+function toggleSkillDetails(skillId) {
+    const details = document.getElementById(`details-${skillId}`);
+    const icon = document.querySelector(`[data-skill-id="${skillId}"] .expand-icon`);
+    
+    if (details) {
+        details.classList.toggle('hidden');
+        if (icon) {
+            icon.textContent = details.classList.contains('hidden') ? '▶' : '▼';
+        }
+    }
+}
+
+// Make toggleSkillDetails available globally
+window.toggleSkillDetails = toggleSkillDetails;
+
 // Display the analysis report
 function displayReport(data) {
     const { 
@@ -528,7 +626,8 @@ function displayReport(data) {
         extractedSkills, 
         totalEmployees,
         totalSkillsInCompany,
-        skillCounts 
+        skillCounts,
+        skillResources
     } = data;
 
     let html = '';
@@ -566,43 +665,38 @@ function displayReport(data) {
     html += `
         <div class="report-section">
             <h3>📊 Project Skill Gap Analysis</h3>
-            <p>Based on ${totalEmployees} employees with ${totalSkillsInCompany} unique skills in your database.</p>
+            <p>Based on ${totalEmployees} employees with ${totalSkillsInCompany} unique skills in your database. <span class="click-hint">Click on a skill to see resources.</span></p>
             
-            <h4><span style="color: var(--danger-color);">❌</span> Critical Skill Gaps (No Employees)</h4>
+            <h4><span style="color: var(--danger);">❌</span> Critical Skill Gaps (No Employees)</h4>
             ${projectAnalysis.hardGaps.length > 0 ? `
                 <p class="alert-text">These skills are required but <strong>no one in your organization has them</strong>:</p>
                 <ul class="skill-list">
                     ${projectAnalysis.hardGaps.map(item => `
                         <li class="gap">
-                            ${item.skill}
+                            <span class="skill-name">${item.skill}</span>
                             <span class="badge badge-danger">MISSING</span>
                         </li>
                     `).join('')}
                 </ul>
-            ` : '<p style="color: var(--success-color); font-weight: 600;">✅ Great news! No critical skill gaps found.</p>'}
+            ` : '<p style="color: var(--success); font-weight: 600;">✅ Great news! No critical skill gaps found.</p>'}
             
-            <h4><span style="color: var(--warning-color);">⚠️</span> At-Risk Skills (Low Supply)</h4>
+            <h4><span style="color: var(--warning);">⚠️</span> At-Risk Skills (Low Supply)</h4>
             ${projectAnalysis.atRisk.length > 0 ? `
-                <p>These skills have very few employees. If they leave or are unavailable, the project is at risk:</p>
+                <p>These skills have very few employees. Click to see who has them:</p>
                 <ul class="skill-list">
-                    ${projectAnalysis.atRisk.map(item => `
-                        <li class="risk">
-                            ${item.skill}
-                            <span class="badge badge-warning">${item.count} employee${item.count > 1 ? 's' : ''}</span>
-                        </li>
-                    `).join('')}
+                    ${projectAnalysis.atRisk.map(item => 
+                        generateSkillRow(item, skillResources, 'risk', 'badge-warning', `${item.count} employee${item.count > 1 ? 's' : ''}`)
+                    ).join('')}
                 </ul>
             ` : '<p>No at-risk skills identified.</p>'}
             
-            <h4><span style="color: var(--success-color);">✅</span> Well-Staffed Skills</h4>
+            <h4><span style="color: var(--success);">✅</span> Well-Staffed Skills</h4>
             ${projectAnalysis.wellStaffed.length > 0 ? `
+                <p>Click on a skill to see all available resources and their experience levels:</p>
                 <ul class="skill-list">
-                    ${projectAnalysis.wellStaffed.map(item => `
-                        <li class="ok">
-                            ${item.skill}
-                            <span class="badge badge-success">${item.count} employees</span>
-                        </li>
-                    `).join('')}
+                    ${projectAnalysis.wellStaffed.map(item => 
+                        generateSkillRow(item, skillResources, 'ok', 'badge-success', `${item.count} employees`)
+                    ).join('')}
                 </ul>
             ` : '<p>No well-staffed skills for this project.</p>'}
         </div>
@@ -615,28 +709,26 @@ function displayReport(data) {
                 <h3>📈 Market Trends Analysis (2024-2026)</h3>
                 <p>How your organization compares to current market demands:</p>
                 
-                <h4><span style="color: var(--danger-color);">❌</span> Trending Skills You're Missing</h4>
+                <h4><span style="color: var(--danger);">❌</span> Trending Skills You're Missing</h4>
                 ${marketAnalysis.hardGaps.length > 0 ? `
                     <p>These are hot skills in the market that your organization lacks:</p>
                     <ul class="skill-list">
                         ${marketAnalysis.hardGaps.map(item => `
                             <li class="gap">
-                                ${item.skill}
+                                <span class="skill-name">${item.skill}</span>
                                 <span class="badge badge-danger">MARKET GAP</span>
                             </li>
                         `).join('')}
                     </ul>
-                ` : '<p style="color: var(--success-color); font-weight: 600;">✅ Excellent! You have coverage for all trending skills.</p>'}
+                ` : '<p style="color: var(--success); font-weight: 600;">✅ Excellent! You have coverage for all trending skills.</p>'}
                 
-                <h4><span style="color: var(--warning-color);">⚠️</span> Trending Skills with Low Coverage</h4>
+                <h4><span style="color: var(--warning);">⚠️</span> Trending Skills with Low Coverage</h4>
                 ${marketAnalysis.atRisk.length > 0 ? `
+                    <p>Click to see available resources:</p>
                     <ul class="skill-list">
-                        ${marketAnalysis.atRisk.map(item => `
-                            <li class="risk">
-                                ${item.skill}
-                                <span class="badge badge-warning">${item.count} employee${item.count > 1 ? 's' : ''}</span>
-                            </li>
-                        `).join('')}
+                        ${marketAnalysis.atRisk.map(item => 
+                            generateSkillRow(item, skillResources, 'risk', 'badge-warning', `${item.count} employee${item.count > 1 ? 's' : ''}`)
+                        ).join('')}
                     </ul>
                 ` : '<p>No trending skills at risk.</p>'}
             </div>
