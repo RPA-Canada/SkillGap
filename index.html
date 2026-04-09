@@ -3,83 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Skill Gap Analyzer</title>
+    <title>SkillSync AI | Intelligent Workforce Gap Analyzer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎯</text></svg>">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎯 AI Skill Gap Analyzer</h1>
-            <p>Upload a project document (RFP, Scope, .txt, .pdf) and an employee skills CSV to identify strategic skill gaps.</p>
-        </header>
-
-        <div class="upload-section">
-            <div class="upload-box">
-                <label for="projectDoc">
-                    <span class="upload-icon">📄</span>
-                    <span>1. Upload Project Document</span>
-                    <span class="file-types">(.txt, .pdf, or paste text below)</span>
-                </label>
-                <input type="file" id="projectDoc" accept=".txt,.pdf">
-                <div class="file-name" id="projectFileName">No file selected</div>
-            </div>
-            <div class="upload-box">
-                <label for="employeeCsv">
-                    <span class="upload-icon">👥</span>
-                    <span>2. Upload Employee Skills</span>
-                    <span class="file-types">(.csv format)</span>
-                </label>
-                <input type="file" id="employeeCsv" accept=".csv">
-                <div class="file-name" id="employeeFileName">No file selected</div>
-            </div>
-        </div>
-
-        <div class="text-input-section">
-            <label for="manualText">Or paste your RFP/Scope document text directly:</label>
-            <textarea id="manualText" placeholder="Paste your project requirements, RFP, or scope document here..."></textarea>
-        </div>
-
-        <div class="market-trends-section">
-            <label>
-                <input type="checkbox" id="includeMarketTrends" checked>
-                Include Market Trends Analysis (2024-2026 Hot Skills)
-            </label>
-        </div>
-
-        <button id="analyzeBtn">
-            <span class="btn-icon">🔍</span>
-            Analyze Skill Gaps
-        </button>
-
-        <div id="loading" class="loading hidden">
-            <div class="spinner"></div>
-            <p>Analyzing your documents...</p>
-        </div>
-
-        <div id="results" class="results-container hidden">
-            <h2>📊 Analysis Report</h2>
-            <div id="report-content"></div>
-        </div>
-
-        <div class="instructions">
-            <h3>📋 How to Use</h3>
-            <ol>
-                <li><strong>Upload a Project Document:</strong> This can be an RFP, project scope, job description, or any text that describes the skills needed for your project.</li>
-                <li><strong>Upload Employee Skills CSV:</strong> A CSV file with two columns: <code>employee_name</code> and <code>skill</code> (one skill per row).</li>
-                <li><strong>Click Analyze:</strong> The AI will extract skills from your document and compare them against your workforce.</li>
-            </ol>
-            
-            <details>
-                <summary>📁 Sample CSV Format</summary>
-                <pre>employee_name,skill
-John Doe,Python
-John Doe,AWS
-Jane Smith,JavaScript
-Jane Smith,React
-Bob Wilson,Project Management</pre>
-            </details>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-gradient"></div>
+        <div class="bg-grid"></div>
+        <div class="floating-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+            <div class="orb orb-3"></div>
         </div>
     </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">🎯</span>
+            <span class="brand-text">SkillSync<span class="brand-ai">AI</span></span>
+        </div>
+        <div class="nav-tagline">Intelligent Workforce Gap Analysis</div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-line">Analyze Your</span>
+                    <span class="title-highlight">Skill Gaps</span>
+                    <span class="title-line">in Seconds</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Upload your RFP, scope document, or project requirements. Our AI instantly identifies 
+                    skill gaps in your workforce and provides actionable insights.
+                </p>
+            </div>
+        </section>
+
+        <!-- Upload Section -->
+        <section class="upload-section glass-card">
+            <div class="section-header">
+                <span class="section-number">01</span>
+                <h2>Upload Your Documents</h2>
+            </div>
+            
+            <div class="upload-grid">
+                <div class="upload-card" id="projectUploadCard">
+                    <div class="upload-icon-wrapper">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Project Document</h3>
+                    <p>RFP, Scope, Requirements (.txt, .pdf)</p>
+                    <input type="file" id="projectDoc" accept=".txt,.pdf" hidden>
+                    <label for="projectDoc" class="upload-btn">
+                        <span>Choose File</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </label>
+                    <div class="file-status" id="projectFileName">No file selected</div>
+                </div>
+
+                <div class="upload-divider">
+                    <span>AND</span>
+                </div>
+
+                <div class="upload-card" id="employeeUploadCard">
+                    <div class="upload-icon-wrapper employee">
+                        <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                    </div>
+                    <h3>Employee Skills</h3>
+                    <p>Your workforce skills database (.csv)</p>
+                    <input type="file" id="employeeCsv" accept=".csv" hidden>
+                    <label for="employeeCsv" class="upload-btn">
+                        <span>Choose File</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </label>
+                    <div class="file-status" id="employeeFileName">No file selected</div>
+                </div>
+            </div>
+
+            <!-- Text Input Alternative -->
+            <div class="text-input-section">
+                <div class="divider-with-text">
+                    <span>OR PASTE TEXT DIRECTLY</span>
+                </div>
+                <textarea id="manualText" placeholder="Paste your project requirements, RFP, or scope document text here..."></textarea>
+            </div>
+
+            <!-- Options -->
+            <div class="options-row">
+                <label class="custom-checkbox">
+                    <input type="checkbox" id="includeMarketTrends" checked>
+                    <span class="checkmark"></span>
+                    <span class="checkbox-label">Include Market Trends Analysis (2024-2026)</span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Analyze Button -->
+        <button id="analyzeBtn" class="analyze-btn">
+            <span class="btn-text">Analyze Skill Gaps</span>
+            <span class="btn-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </span>
+            <span class="btn-loading">
+                <svg class="spinner" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none" stroke-dasharray="31.4 31.4" stroke-linecap="round"/>
+                </svg>
+            </span>
+        </button>
+
+        <!-- Loading State -->
+        <div id="loading" class="loading-section hidden">
+            <div class="loading-animation">
+                <div class="loading-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <p class="loading-text">Analyzing your documents with AI...</p>
+            <p class="loading-subtext">Extracting skills and identifying gaps</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results" class="results-section hidden">
+            <div class="section-header">
+                <span class="section-number">02</span>
+                <h2>Analysis Results</h2>
+            </div>
+            <div id="report-content"></div>
+        </section>
+
+        <!-- Instructions Section -->
+        <section class="instructions-section glass-card">
+            <div class="section-header">
+                <span class="section-number">?</span>
+                <h2>How It Works</h2>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3>Upload Documents</h3>
+                    <p>Upload your RFP, project scope, or job requirements document. We support TXT and PDF formats.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3>Add Team Skills</h3>
+                    <p>Upload a CSV file with your team's skills. Format: <code>employee_name,skill</code> (one skill per row).</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3>Get Insights</h3>
+                    <p>Our AI analyzes the gap between required and available skills, providing actionable recommendations.</p>
+                </div>
+            </div>
+
+            <details class="csv-format-details">
+                <summary>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    View Sample CSV Format
+                </summary>
+                <pre><code>employee_name,skill
+John Doe,Python
+John Doe,AWS
+John Doe,Machine Learning
+Jane Smith,JavaScript
+Jane Smith,React
+Jane Smith,TypeScript
+Bob Wilson,Project Management
+Bob Wilson,Agile</code></pre>
+            </details>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Built for AI Hackathon 2026 | Powered by Speridian Technologies</p>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script src="script.js"></script>
