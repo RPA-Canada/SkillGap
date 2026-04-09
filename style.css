@@ -1,0 +1,476 @@
+/* CSS Variables for easy theming */
+:root {
+    --primary-color: #3498db;
+    --primary-hover: #2980b9;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --danger-color: #c0392b;
+    --bg-color: #f4f7f9;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --text-secondary: #7f8c8d;
+    --border-color: #e0e0e0;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background-attachment: fixed;
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: var(--card-bg);
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+}
+
+/* Header Styles */
+header {
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 25px;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+    font-size: 2.2rem;
+}
+
+header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin: 0;
+}
+
+/* Upload Section */
+.upload-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+    .upload-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+.upload-box {
+    border: 2px dashed #bdc3c7;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+    transition: border-color 0.3s, background-color 0.3s;
+    cursor: pointer;
+}
+
+.upload-box:hover {
+    border-color: var(--primary-color);
+    background-color: #f8fafc;
+}
+
+.upload-box.has-file {
+    border-color: var(--success-color);
+    background-color: #f0fff4;
+}
+
+.upload-box label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    color: #34495e;
+}
+
+.upload-icon {
+    font-size: 2.5rem;
+}
+
+.file-types {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: normal;
+}
+
+.file-name {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    word-break: break-all;
+}
+
+input[type="file"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* Text Input Section */
+.text-input-section {
+    margin-bottom: 20px;
+}
+
+.text-input-section label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #34495e;
+}
+
+.text-input-section textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize: vertical;
+    transition: border-color 0.3s;
+}
+
+.text-input-section textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Market Trends Checkbox */
+.market-trends-section {
+    margin-bottom: 25px;
+    padding: 15px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+}
+
+.market-trends-section label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.market-trends-section input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+/* Analyze Button */
+button#analyzeBtn {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+button#analyzeBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+button#analyzeBtn:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    font-size: 1.4rem;
+}
+
+/* Loading Spinner */
+.loading {
+    text-align: center;
+    padding: 40px;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Results Section */
+.results-container {
+    margin-top: 35px;
+    border-top: 2px solid var(--border-color);
+    padding-top: 30px;
+}
+
+.results-container h2 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Report Sections */
+.report-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+}
+
+.report-section h3 {
+    color: #2c3e50;
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.report-section h4 {
+    margin: 20px 0 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Skill Lists */
+.skill-list {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.skill-list li {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ecf0f1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+.skill-list li:hover {
+    background-color: #fff;
+}
+
+.skill-list li:last-child {
+    border-bottom: none;
+}
+
+.skill-list li.gap {
+    color: var(--danger-color);
+    font-weight: bold;
+    background-color: #fff5f5;
+}
+
+.skill-list li.risk {
+    color: var(--warning-color);
+    font-weight: bold;
+    background-color: #fffbeb;
+}
+
+.skill-list li.ok {
+    color: var(--success-color);
+}
+
+.skill-list li .badge {
+    margin-left: auto;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.badge-danger {
+    background-color: #fee2e2;
+    color: var(--danger-color);
+}
+
+.badge-warning {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.badge-success {
+    background-color: #d1fae5;
+    color: #059669;
+}
+
+/* Summary Cards */
+.summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+@media (max-width: 600px) {
+    .summary-cards {
+        grid-template-columns: 1fr;
+    }
+}
+
+.summary-card {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.summary-card.danger {
+    background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
+}
+
+.summary-card.warning {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.summary-card.success {
+    background: linear-gradient(135deg, #c6f6d5 0%, #9ae6b4 100%);
+}
+
+.summary-card .number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    display: block;
+}
+
+.summary-card .label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Instructions Section */
+.instructions {
+    margin-top: 40px;
+    padding: 25px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.instructions h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.instructions ol {
+    padding-left: 20px;
+}
+
+.instructions li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.instructions code {
+    background-color: #e2e8f0;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.instructions details {
+    margin-top: 20px;
+}
+
+.instructions summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.instructions pre {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 15px;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.9rem;
+}
+
+/* Market Trends Section in Report */
+.market-trends-report {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-color);
+}
+
+.market-trends-report h4 {
+    color: #6366f1;
+}
+
+/* Extracted Skills Pills */
+.skills-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.skill-pill {
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Recommendations Section */
+.recommendations {
+    margin-top: 25px;
+    padding: 20px;
+    background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.recommendations h4 {
+    margin-top: 0;
+    color: #5b21b6;
+}
+
+.recommendations ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.recommendations li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}

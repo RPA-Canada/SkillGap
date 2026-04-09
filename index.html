@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Skill Gap Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎯 AI Skill Gap Analyzer</h1>
+            <p>Upload a project document (RFP, Scope, .txt, .pdf) and an employee skills CSV to identify strategic skill gaps.</p>
+        </header>
+
+        <div class="upload-section">
+            <div class="upload-box">
+                <label for="projectDoc">
+                    <span class="upload-icon">📄</span>
+                    <span>1. Upload Project Document</span>
+                    <span class="file-types">(.txt, .pdf, or paste text below)</span>
+                </label>
+                <input type="file" id="projectDoc" accept=".txt,.pdf">
+                <div class="file-name" id="projectFileName">No file selected</div>
+            </div>
+            <div class="upload-box">
+                <label for="employeeCsv">
+                    <span class="upload-icon">👥</span>
+                    <span>2. Upload Employee Skills</span>
+                    <span class="file-types">(.csv format)</span>
+                </label>
+                <input type="file" id="employeeCsv" accept=".csv">
+                <div class="file-name" id="employeeFileName">No file selected</div>
+            </div>
+        </div>
+
+        <div class="text-input-section">
+            <label for="manualText">Or paste your RFP/Scope document text directly:</label>
+            <textarea id="manualText" placeholder="Paste your project requirements, RFP, or scope document here..."></textarea>
+        </div>
+
+        <div class="market-trends-section">
+            <label>
+                <input type="checkbox" id="includeMarketTrends" checked>
+                Include Market Trends Analysis (2024-2026 Hot Skills)
+            </label>
+        </div>
+
+        <button id="analyzeBtn">
+            <span class="btn-icon">🔍</span>
+            Analyze Skill Gaps
+        </button>
+
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Analyzing your documents...</p>
+        </div>
+
+        <div id="results" class="results-container hidden">
+            <h2>📊 Analysis Report</h2>
+            <div id="report-content"></div>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 How to Use</h3>
+            <ol>
+                <li><strong>Upload a Project Document:</strong> This can be an RFP, project scope, job description, or any text that describes the skills needed for your project.</li>
+                <li><strong>Upload Employee Skills CSV:</strong> A CSV file with two columns: <code>employee_name</code> and <code>skill</code> (one skill per row).</li>
+                <li><strong>Click Analyze:</strong> The AI will extract skills from your document and compare them against your workforce.</li>
+            </ol>
+            
+            <details>
+                <summary>📁 Sample CSV Format</summary>
+                <pre>employee_name,skill
+John Doe,Python
+John Doe,AWS
+Jane Smith,JavaScript
+Jane Smith,React
+Bob Wilson,Project Management</pre>
+            </details>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

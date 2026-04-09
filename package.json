@@ -1,0 +1,19 @@
+{
+  "name": "skillsync-ai",
+  "version": "1.0.0",
+  "description": "AI-powered workforce skill gap analyzer",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "keywords": [
+    "ai",
+    "skill-gap",
+    "workforce",
+    "analyzer",
+    "hackathon"
+  ],
+  "author": "AI Hackathon 2026",
+  "license": "MIT"
+}
